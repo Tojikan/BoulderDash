@@ -12,9 +12,10 @@ public class BGRemoval : MonoBehaviour
     {
         if (other.tag == "BG")
         {
-            Destroy(other.gameObject);
             //remove from the list storing active map sections
-            mapGenerator.currentSections.Remove(other.gameObject);
+            mapGenerator.CurrentSections.Remove(other.gameObject);
+            //then destroy it
+            Destroy(other.gameObject);
             //Generate a new one
             mapGenerator.AddNewSection();
         }

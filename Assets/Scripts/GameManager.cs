@@ -3,12 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//currently only lets you disable and enable the autoscroll and player controls
+//GameManager has a set of functions that let you control the state of the game
 public class GameManager : MonoBehaviour
 {
     public PlayerController player;                                 //drag reference to player controller
     public AutoScroll scroller;                                     //drag reference to scroller
+    private ObstacleTimer obstacleTimer;                            //obstacleTimer should be a component on the same game object
     private bool enableMove;                                        //checks if we're enabled or not
+
+
+    private void Awake()
+    {
+        obstacleTimer = GetComponent<ObstacleTimer>();
+    }
+
+
+    #region enable and disable movement
     public bool EnableMove                                          //public property that calls the functions to enable or disable
     {
         get
@@ -44,7 +54,6 @@ public class GameManager : MonoBehaviour
     //disables all movement and goes into idle animation
     void DisableMovement()
     {
-
         scroller.enabled = false;
         player.IdleAnim();
         player.enabled = false;
@@ -57,4 +66,5 @@ public class GameManager : MonoBehaviour
         player.enabled = true;
         scroller.enabled = true;
     }
+    #endregion
 }

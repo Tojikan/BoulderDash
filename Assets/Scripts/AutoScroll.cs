@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 //Class that handles the autoscroll feature of the game
-//Add all BG sections as a child of this game object. This scrolls any children object
+//Add all BG sections as a child of this game object. This functions by scrolling any children object
 public class AutoScroll : MonoBehaviour
 {
     public float scrollSpeed = 5.0f;                    //Set the speed at which the map scrolls up

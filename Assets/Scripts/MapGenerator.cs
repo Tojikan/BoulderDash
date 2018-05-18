@@ -9,8 +9,10 @@ using UnityEngine;
 //TO DO: add data sets for prefabs and add randomizer
 public class MapGenerator : MonoBehaviour
 {
-    public List<GameObject> sectionPrefabs;                 //Drag all possible section prefabs here
-    public List<GameObject> currentSections;                //this stores all the current sections in the game
+    public List<GameObject> sectionPrefabs;                  //Drag all possible section prefabs here
+    private List<GameObject> currentSections;                //stores all the current sections in the game
+    public List<GameObject> CurrentSections
+    { get { return currentSections; }}              //public accessor for current sections list
     public GameObject mapContainer;                         //drag a reference to the map parent object
     private Vector3 lastSection;                            //Stores the position of the last section
     private const int sectionLimit = 5;                     //This is the amount of sections that exist on a map at a given time and at initialize
@@ -47,7 +49,6 @@ public class MapGenerator : MonoBehaviour
         }
         //set our last section position
         lastSection = position;
-       
     }
 
     //generate a new section, called by the BGRemoval class
