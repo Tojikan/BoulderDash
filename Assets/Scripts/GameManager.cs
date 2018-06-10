@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //GameManager has a set of functions that let you control the state of the game
@@ -10,15 +11,6 @@ public class GameManager : MonoBehaviour
     public AutoScroll scroller;                                     //drag reference to scroller
     private ObstacleTimer obstacleTimer;                            //obstacleTimer should be a component on the same game object
     private bool enableMove;                                        //checks if we're enabled or not
-
-
-    private void Awake()
-    {
-        obstacleTimer = GetComponent<ObstacleTimer>();
-    }
-
-
-    #region enable and disable movement
     public bool EnableMove                                          //public property that calls the functions to enable or disable
     {
         get
@@ -38,6 +30,17 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public Text distanceCounter;                                    //drag in the distance counter text here. GameManager sets up the reference but this is changed in the DistanceCounter script
+
+    private void Awake()
+    {
+        obstacleTimer = GetComponent<ObstacleTimer>();
+        DistanceCounter.distanceCounter = distanceCounter;
+    }
+
+
+    #region enable and disable movement
+   
 
     private void Update()
     {
