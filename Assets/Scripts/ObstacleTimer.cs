@@ -8,22 +8,12 @@ using UnityEngine;
  **/
 public class ObstacleTimer : MonoBehaviour
 {
-    public static ObstacleTimer instance = null;        //singleton instance access point
     private int time;                                   //time variable
-    const int maxTime = 10000;                          //max value timer reaches before going back to 0
+    const int maxTime = 1000;                           //max value timer reaches before going back to 0
     const float timerInterval = 0.01f;                  //time interval between coroutine loops 
 
     public delegate void ObsTimer(int eventTimer);
     public static event ObsTimer ObsTimerEvent;
-
-    //make singleton instance
-    void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(this);
-    }
 
 
     // Use this for initialization
@@ -61,13 +51,15 @@ public class ObstacleTimer : MonoBehaviour
 
             //Increment our timer by 1.
             time += 1;
-            //Call our delegate to trigger any assigned events, if any
-            if (ObsTimerEvent != null)
-                ObsTimerEvent(time);
 
             //reset time if we've reached maxtime
             if (time > maxTime)
+            {
                 ResetTimer();
+            }
+            //Call our delegate to trigger any assigned events, if any
+            if (ObsTimerEvent != null)
+                ObsTimerEvent(time);
         }
     }
 

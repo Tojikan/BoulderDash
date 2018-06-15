@@ -38,9 +38,14 @@ public class GameManager : MonoBehaviour
         DistanceCounter.distanceCounter = distanceCounter;
     }
 
+    private void Start()
+    {
+        InitGame();
+    }
+
 
     #region enable and disable movement
-   
+
 
     private void Update()
     {
@@ -70,4 +75,11 @@ public class GameManager : MonoBehaviour
         scroller.enabled = true;
     }
     #endregion
+
+    //Start the timer
+    void InitGame()
+    {
+        obstacleTimer.StartTimer();
+    }
+
 }

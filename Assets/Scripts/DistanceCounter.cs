@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+/// <summary>
+/// Static class that counts the distance
+/// Currently just used for testing
+/// </summary>
 public static class DistanceCounter
 {
     private static float distance = 0f;                            //distance variable to store how far 

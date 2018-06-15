@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Base Class for Obstacles
+/// <summary>
+/// Base class for all obstacles
+/// Each obstacle should have a trigger time, a loop length, and such. 
+/// Each obstacle subscribes to the timer event in order to trigger its obstacle functions
+/// </summary>
 public class Obstacle : MonoBehaviour
 {
     public bool showBox;
@@ -37,7 +41,7 @@ public class Obstacle : MonoBehaviour
     //Triggers obstacle at the time. Takes in a parameter of current time
     protected virtual void TimerReceiver(int timerTime)
     {
-        if ((timerTime % loopLength) == timerTime)
+        if ((timerTime % loopLength) == triggerTime)
         {
             TriggerObstacle();
         }
@@ -47,9 +51,7 @@ public class Obstacle : MonoBehaviour
     protected virtual void TriggerObstacle() { }
 
     //sets the sorting layer for sprites based on a given int. To be implemented in inherited classes
-    public virtual void SetLayer(int layer)
-    {
-    }
+    public virtual void SetLayer(int layer){ }
 
 
     #endregion
@@ -62,14 +64,17 @@ public class Obstacle : MonoBehaviour
         {
             Gizmos.color = Color.red;
             BoxCollider2D boundary = GetComponent<BoxCollider2D>();
-            Gizmos.DrawCube(transform.position, boundary.size);
+            Vector3 boxSize = new Vector3(boundary.size.x * gameObject.transform.localScale.x,
+                                          boundary.size.y * gameObject.transform.localScale.y,
+                                          gameObject.transform.localScale.z);
+            Gizmos.DrawCube(transform.position, boxSize);
         }
     }
 
     //Checks if the length of the loop is zero, which is invalid
     protected virtual bool CheckZero()
     {
-        if (loopLength == 0)
+        if (loopLength == 0 || loopLength > 1000)
         {
             Debug.Log("Invalid loop length.");
             return false;

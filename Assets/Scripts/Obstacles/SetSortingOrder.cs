@@ -7,14 +7,16 @@ using UnityEngine;
 /// </summary>
 public class SetSortingOrder : MonoBehaviour
 {
-    private static float playerY;
-    private bool isSorted;
+    private static float playerY = 0;               //static float that stores the y position of the player
+    private bool isSorted;                          //bool check to see if this has already been sorted
 
     //find the player if it hasn't been found yet. 
     private void Awake()
     {
+        //Find the playerY for the first time
         if (playerY == 0)
         {
+            // Find Player and get the Y position
             GameObject player = FindObjectOfType<PlayerController>().gameObject;
             playerY = player.transform.position.y + player.GetComponent<Collider2D>().offset.y;
         }
@@ -23,8 +25,10 @@ public class SetSortingOrder : MonoBehaviour
 
     private void Update()
     {
+        //check if sorted
         if (!isSorted)
         {
+            //then set the obstacle's sorting layer
             if (gameObject.transform.position.y > playerY)
             {
                 gameObject.GetComponent<Obstacle>().SetLayer(5);
