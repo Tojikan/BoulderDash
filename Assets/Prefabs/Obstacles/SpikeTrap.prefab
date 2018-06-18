@@ -93,12 +93,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1918543391167914}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d05a1632a817ed4eb0689bd5c3cac7d, type: 3}
+  m_Script: {fileID: 11500000, guid: 465db0ee71b413d4ca24b97a35da345b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   showBox: 0
   triggerTime: 50
-  loopLength: 250
+  loopLength: 100
 --- !u!212 &212139364649711024
 SpriteRenderer:
   m_ObjectHideFlags: 1

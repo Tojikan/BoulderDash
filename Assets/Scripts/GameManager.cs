@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-//GameManager has a set of functions that let you control the state of the game
+/// <summary>
+/// Game Manager controls the state and flow of the game and will be responsible for game initiation
+/// Also controls any changes to the UI overlay
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public PlayerController player;                                 //drag reference to player controller
@@ -31,11 +34,14 @@ public class GameManager : MonoBehaviour
         }
     }
     public Text distanceCounter;                                    //drag in the distance counter text here. GameManager sets up the reference but this is changed in the DistanceCounter script
+    public Image distMeter;                                         //drag in the distance meter image here
+    private static Image s_distMeter;                               //static object reference to the distmeter
 
     private void Awake()
     {
         obstacleTimer = GetComponent<ObstacleTimer>();
-        DistanceCounter.distanceCounter = distanceCounter;
+        GameData.distanceCounter = distanceCounter;
+        s_distMeter = distMeter;
     }
 
     private void Start()
@@ -43,6 +49,14 @@ public class GameManager : MonoBehaviour
         InitGame();
     }
 
+    #region game init
+    //Start the timer
+    void InitGame()
+    {
+        obstacleTimer.StartTimer();
+    }
+
+    #endregion
 
     #region enable and disable movement
 
@@ -76,10 +90,36 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    //Start the timer
-    void InitGame()
+    #region Game UI
+
+    //grabs data from GameData to set the fill amount of the meter. static function because it's called in a few places. 
+    public static void SetBDistMeter()
     {
-        obstacleTimer.StartTimer();
+        SetBDistColor(GameData.BoulderDist);
+        s_distMeter.fillAmount = GameData.BoulderDist;
     }
+
+    //set color of meter based on how full it is
+    private static void SetBDistColor(float dist)
+    {
+        if (dist < 0.33)
+        {
+            s_distMeter.color = Color.green;
+            return;
+        }
+        if (dist < 0.67 && dist > 0.33)
+        {
+            s_distMeter.color = Color.yellow;
+            return;
+        }
+        if (dist >= 0.67)
+        {
+            s_distMeter.color = Color.red;
+            return;
+        }
+        
+    }
+
+    #endregion
 
 }

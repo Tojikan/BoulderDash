@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public AutoScroll scroller;                                                 //drag the object with the autoscroll here
     public float playerSideSpeed;                                               //the speed at which the character model moves from side to side
     private Animator animator;                                                  //animator component for setting animation parameters
-    private bool isMoving;                                                      //check to see if player is currently in a movement
+    private bool isLaneChanging;                                                //check to see if player is currently in a movement to a different lane
     private Vector3 leftPos = new Vector3(-1.3f, 3.14f, 0);                     //left column position, passed into the movement coroutine.
     private Vector3 centerPos = new Vector3(0, 3.14f, 0);                       //center column position
     private Vector3 rightPos = new Vector3(1.3f, 3.14f, 0);                     //right column position  
@@ -30,10 +30,9 @@ public class PlayerController : MonoBehaviour
         transform.position = centerPos;
         playerPosition = Positions.middle;
         //initialize move check
-        isMoving = false;
+        isLaneChanging = false;
         //get component
         animator = GetComponent<Animator>();
-
     }
 
     void Update()
@@ -43,6 +42,8 @@ public class PlayerController : MonoBehaviour
         {
             IdleAnim();
             scroller.StopScroll();
+            GameData.DecreaseBDist();
+            GameManager.SetBDistMeter();
         }
         //otherwise resume walk as normal if key is not down
         else
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour
         //move left
         if (Input.GetKeyDown("left"))
         {
-            if (isMoving)
+            if (isLaneChanging)
                 return;
             MoveLeft();
         }
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour
         //move right
         if (Input.GetKeyDown("right"))
         {
-            if (isMoving)
+            if (isLaneChanging)
                 return;
             MoveRight();
         }
@@ -134,7 +135,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator SideMove(Vector3 target)
     {
         //set bool
-        isMoving = true;
+        isLaneChanging = true;
         //get the remaining distance between target and current position. Use sqrmagnitude to reduce computational needs
         float sqrRemainingDistance = (transform.position - target).sqrMagnitude;
 
@@ -149,7 +150,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         //reset bool
-        isMoving = false;
+        isLaneChanging = false;
     }
     #endregion
 }
