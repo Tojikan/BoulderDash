@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public Text distanceCounter;                                    //drag in the distance counter text here. GameManager sets up the reference but this is changed in the DistanceCounter script
     public Image distMeter;                                         //drag in the distance meter image here
     private static Image s_distMeter;                               //static object reference to the distmeter
+    public Text moneyCounter;                                       //drag in the text object for money counting
 
     private void Awake()
     {
@@ -118,6 +119,12 @@ public class GameManager : MonoBehaviour
             return;
         }
         
+    }
+
+
+    public void SetMoneyCounter()
+    {
+        moneyCounter.text = GameData.Money.ToString("X3");
     }
 
     #endregion

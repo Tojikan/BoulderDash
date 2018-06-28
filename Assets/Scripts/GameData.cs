@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-/// <summary>Contains the distance of the playear run and the distance to boulder </summary>
+/// <summary>Contains all data pertaining to the current run </summary>
 /// Static data class meant to be accessible form multiple functions. This contains all of the data in regards to a single run of the game
 /// Distance tracks how far the player has run. Incremented in AutoScroll
 /// BoulderDist is the stop meter that tracks how long the player has stopped. Increment/Decremented in player controller
+/// Tracks any money collected in a run 
 public static class GameData
 {
     private static float distance = 0f;                            //distance variable to store how far 
@@ -20,6 +21,7 @@ public static class GameData
             distanceCounter.text = distance.ToString("F1");
         }
     }                           //setter in order to set the distance counter text
+
     public static float Distance
     {
         get { return distance; }
@@ -31,6 +33,14 @@ public static class GameData
     {
         get { return boulderDist; }
     }                           //Accessor to read the boulder dist
+
+    private static int money;                                    //counter for in-game currency collected in a single run
+    public static int Money
+    {
+        get { return money; }
+    }                                   //Accessor for money in a run. 
+
+
     private static float decreaseRate = 0.005f;                  //rate at which the boulder gets closer to player
     private static float increaseRate = 0.001f;                  //rate at which the boulder gets further from player
 
@@ -72,5 +82,15 @@ public static class GameData
         boulderDist -= increaseRate;
     }
 
+    #endregion
+
+
+    #region money
+
+    //Picks up one money
+    public static void PickUpMoney()
+    {
+        money++;
+    }
     #endregion
 }
