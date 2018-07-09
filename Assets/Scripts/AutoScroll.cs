@@ -10,24 +10,29 @@ public class AutoScroll : MonoBehaviour
     public float scrollSpeed = 5.0f;                    //Set the speed at which the map scrolls up
     public bool scrollEnabled;                          //simple bool check to control movement
     public PlayerController player;                     //drag a reference to our player object
+    public bool Death;                                  //disables any controls during death
 
     private void Start()
     {
-        //initialize to true
+        //initialize bools
         scrollEnabled = true;
+        Death = false;
     }
 
 
     // Update is called once per frame
     void Update ()
     {
-        //if we're allowed to scroll, scroll
-        if (scrollEnabled)
+        if (!Death)
         {
-            MoveSections();
-            GameData.IncreaseDistance();
-            GameData.IncreaseBDist();
-            GameManager.SetBDistMeter();
+            //if we're allowed to scroll, scroll
+            if (scrollEnabled)
+            {
+                MoveSections();
+                GameData.IncreaseDistance();
+                GameData.IncreaseBDist();
+                GameManager.SetBDistMeter();
+            }
         }
 	}
 

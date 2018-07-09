@@ -8,11 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     public AutoScroll scroller;                                                 //drag the object with the autoscroll here
     public float playerSideSpeed;                                               //the speed at which the character model moves from side to side
-    private Animator animator;                                                  //animator component for setting animation parameters
+    public Animator animator;                                                  //animator component for setting animation parameters
     private bool isLaneChanging;                                                //check to see if player is currently in a movement to a different lane
     private Vector3 leftPos = new Vector3(-1.3f, 3.14f, 0);                     //left column position, passed into the movement coroutine.
     private Vector3 centerPos = new Vector3(0, 3.14f, 0);                       //center column position
     private Vector3 rightPos = new Vector3(1.3f, 3.14f, 0);                     //right column position  
+    public bool moveEnabled;                                                    //set if movement enabled
 
     //enum definition storing possible player positions
     enum Positions
@@ -31,12 +32,16 @@ public class PlayerController : MonoBehaviour
         playerPosition = Positions.middle;
         //initialize move check
         isLaneChanging = false;
+        moveEnabled = true;
         //get component
         animator = GetComponent<Animator>();
     }
 
     void Update()
     {
+        if (!moveEnabled)
+            return;
+
         //Stop movement upon receiving key down *temporary* and set idle animation
         if (Input.GetKey("down"))
         {

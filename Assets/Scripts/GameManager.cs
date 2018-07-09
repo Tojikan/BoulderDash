@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
     public Image distMeter;                                         //drag in the distance meter image here
     private static Image s_distMeter;                               //static object reference to the distmeter
     public Text moneyCounter;                                       //drag in the text object for money counting
+    public GameObject boulder;                                      //drag in the boulder game object
+    private bool boulderDeath;                                      //you're dead if this is true
 
     private void Awake()
     {
@@ -55,6 +58,9 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         obstacleTimer.StartTimer();
+        GameData.ResetDistance();
+        GameData.ResetStopMeter();
+        boulderDeath = false;
     }
 
     #endregion
@@ -71,6 +77,19 @@ public class GameManager : MonoBehaviour
                 EnableMove = false;
             else
                 EnableMove = true;
+        }
+
+        //if you exceed the stopping meter, start the boulder death
+        if (GameData.BoulderDist >= 1)
+        {
+            boulderDeath = true;
+        }
+
+        //set the boulder dashing
+        if (boulderDeath)
+        {
+            boulder.gameObject.SetActive(true);
+            boulder.transform.Translate(0, -0.15f, 0);
         }
     }
 
@@ -124,9 +143,8 @@ public class GameManager : MonoBehaviour
 
     public void SetMoneyCounter()
     {
-        moneyCounter.text = GameData.Money.ToString("X3");
+        moneyCounter.text = GameData.Money.ToString("G3");
     }
 
     #endregion
-
 }

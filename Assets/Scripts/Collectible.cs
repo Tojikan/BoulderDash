@@ -14,8 +14,6 @@ public abstract class Collectible : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Collission");
-
         if (collision.gameObject.tag == "Player")
         {
             PickUpAnimation();

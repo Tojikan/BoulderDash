@@ -10,6 +10,8 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     public List<GameObject> sectionPrefabs;                  //Drag all possible section prefabs here
+    public bool maxPickup;                                  //So we can set pickups to 100% spawn rate
+    public GameObject testPickup;                            //Drag a pickup prefab here
     private List<GameObject> currentSections;                //stores all the current sections in the game
     public List<GameObject> CurrentSections
     { get { return currentSections; }}                      //public accessor for current sections list
@@ -32,10 +34,17 @@ public class MapGenerator : MonoBehaviour
         //creates new sections up to sectionLimit
         for (int i = 0; i < sectionLimit; i++)
         {
-            //randomizes a new prefab from list
-            int randomIndex = UnityEngine.Random.Range(0, sectionPrefabs.Count);
+            //initialized index at 0 so we don't start with obstacles
+            int randomIndex = 0;
+            if (i > 1)
+            {
+                //randomizes a new prefab from list
+                randomIndex = UnityEngine.Random.Range(0, sectionPrefabs.Count);
+            }
             //instantiate a section and set its parent
             GameObject newSection = Instantiate(sectionPrefabs[randomIndex], position, Quaternion.identity, mapContainer.transform);
+            //add pickups
+            GeneratePickups(newSection);
             //add to our section list
             currentSections.Add(newSection);
             //set a new position for the next section, half of the box collider
@@ -56,6 +65,7 @@ public class MapGenerator : MonoBehaviour
         GameObject newSection = Instantiate(sectionPrefabs[randomIndex], newPosition, Quaternion.identity, mapContainer.transform);
         //add to section list
         currentSections.Add(newSection);
+        GeneratePickups(newSection);
     }
 
     //gets the position for a new section
@@ -67,5 +77,32 @@ public class MapGenerator : MonoBehaviour
         //adds the size of the collider to the y position since everything has moved roughly one whole space
         newSectionPosition.y -= lastSection.GetComponent<Collider2D>().bounds.size.y;
         return newSectionPosition;
+    }
+
+    //generates pickups at random
+    private void GeneratePickups(GameObject section)
+    {
+        Vector3 pickupPosition;
+        //get random int and if over 70, generate the pickup
+        int random;
+        if (!maxPickup)
+            random = UnityEngine.Random.Range(0, 101);
+        else 
+            random = UnityEngine.Random.Range(70, 101);
+
+        if (random >= 70)
+        {
+            //random lane positions for the pickup. Obtained old fashion style so may need to be changed to be more dynamic later depending
+            if (random <= 80)
+                pickupPosition = new Vector3(-4.38f, 0, 0);
+            else if (random <= 90)
+                pickupPosition = new Vector3(-2.87f, 0, 0);
+            else
+                pickupPosition = new Vector3(-1.37f, 0, 0);
+            
+            //instantiate a new pickup and set its parent accordingly
+            GameObject newPickup = Instantiate(testPickup, pickupPosition, Quaternion.identity);
+            newPickup.transform.SetParent(section.transform, false);
+        }
     }
 }
