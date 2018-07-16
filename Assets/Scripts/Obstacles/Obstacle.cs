@@ -45,6 +45,13 @@ public class Obstacle : MonoBehaviour
 
     //to be implemented in the inherited obstacle classes
     protected virtual void TriggerObstacle() { }
+
+    //sets the sorting layer for sprites based on a given int. To be implemented in inherited classes
+    public virtual void SetLayer(int layer)
+    {
+    }
+
+
     #endregion
 
     #region utility functions and helpers

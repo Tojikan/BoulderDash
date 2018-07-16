@@ -279,7 +279,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1202084483}
   scroller: {fileID: 114063410}
+<<<<<<< HEAD
   distanceCounter: {fileID: 0}
+=======
+  distanceCounter: {fileID: 1312449448}
+>>>>>>> 2345b2482c7e3560d5a802510899c1eb89fe773d
 --- !u!4 &964256129
 Transform:
   m_ObjectHideFlags: 0
@@ -865,7 +869,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sectionPrefabs:
+<<<<<<< HEAD
   - {fileID: 1788538246994278, guid: 45fcb2d88bc5421469342ad563f89f65, type: 2}
+=======
+  - {fileID: 1927590147326748, guid: b570614310a25064cb67ff2f6c8f059a, type: 2}
+>>>>>>> 2345b2482c7e3560d5a802510899c1eb89fe773d
   - {fileID: 1788538246994278, guid: 45fcb2d88bc5421469342ad563f89f65, type: 2}
   mapContainer: {fileID: 114063409}
 --- !u!4 &1806869339
