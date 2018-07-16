@@ -11,13 +11,14 @@ public class BGRemoval : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "BG")
-        {
+        {            
+            //Generate a new one
+            mapGenerator.AddNewSection();
             //remove from the list storing active map sections
             mapGenerator.CurrentSections.Remove(other.gameObject);
             //then destroy it
             Destroy(other.gameObject);
-            //Generate a new one
-            mapGenerator.AddNewSection();
+
         }
     }
 }

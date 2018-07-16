@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BG
   - BGWall
+  - Lethal
   layers:
   - Default
   - TransparentFX

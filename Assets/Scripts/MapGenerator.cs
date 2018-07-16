@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
     public List<GameObject> sectionPrefabs;                  //Drag all possible section prefabs here
     private List<GameObject> currentSections;                //stores all the current sections in the game
     public List<GameObject> CurrentSections
-    { get { return currentSections; }}              //public accessor for current sections list
+    { get { return currentSections; }}                      //public accessor for current sections list
     public GameObject mapContainer;                         //drag a reference to the map parent object
     private Vector3 lastSection;                            //Stores the position of the last section
     private const int sectionLimit = 5;                     //This is the amount of sections that exist on a map at a given time and at initialize
@@ -22,12 +22,6 @@ public class MapGenerator : MonoBehaviour
     {
         currentSections = new List<GameObject>();
         InitialMapGeneration();
-	}
-
-    // Update is called once per frame
-    void Update ()
-    {
-		
 	}
 
     //Generates the initial map
@@ -45,7 +39,7 @@ public class MapGenerator : MonoBehaviour
             //add to our section list
             currentSections.Add(newSection);
             //set a new position for the next section, half of the box collider
-            position.y -= newSection.GetComponent<Collider2D>().bounds.size.y / 2;
+            position.y -= newSection.GetComponent<Collider2D>().bounds.size.y;
         }
         //set our last section position
         lastSection = position;
@@ -54,10 +48,8 @@ public class MapGenerator : MonoBehaviour
     //generate a new section, called by the BGRemoval class
     public void AddNewSection()
     {
-        //spawn it at the last section position
-        Vector3 newPosition = GetLastSectionPos();
-        //Move it up by half since the sections have moved
-        newPosition.y = newPosition.y / 2;
+        //Get a new position based on the last section
+        Vector3 newPosition = GetNewSectionPos();
         //randomize new prefab
         int randomIndex = UnityEngine.Random.Range(0, sectionPrefabs.Count);
         //instantiate and set parent
@@ -66,8 +58,14 @@ public class MapGenerator : MonoBehaviour
         currentSections.Add(newSection);
     }
 
-    private Vector3 GetLastSectionPos()
+    //gets the position for a new section
+    private Vector3 GetNewSectionPos()
     {
-        return lastSection;
+        //gets the last section
+        GameObject lastSection = currentSections[sectionLimit-1];
+        Vector3 newSectionPosition = lastSection.transform.position;
+        //adds the size of the collider to the y position since everything has moved roughly one whole space
+        newSectionPosition.y -= lastSection.GetComponent<Collider2D>().bounds.size.y;
+        return newSectionPosition;
     }
 }

@@ -25,6 +25,7 @@ public class AutoScroll : MonoBehaviour
         if (scrollEnabled)
         {
             MoveSections();
+            DistanceCounter.IncreaseDistance();
         }
 	}
 
